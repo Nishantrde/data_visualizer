@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualizer</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-weight: 400;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+        }
+
+        .bar {
+            fill: #4A90E2;
+            transition: fill 0.3s ease;
+        }
+
+        .bar:hover {
+            fill: #76b6f9;
+        }
+
+        .axis-label {
+            font-size: 16px;
+            font-weight: bold;
+            fill: #333;
+        }
+
+        .axis path, .axis line {
+            stroke: #ccc;
+        }
+
+        .tick text {
+            font-size: 14px;
+            color: #333;
+        }
+
+        .tooltip {
+            position: absolute;
+            background-color: #333;
+            color: #fff;
+            padding: 8px;
+            border-radius: 4px;
+            pointer-events: none;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data Visualization</h1>
+
+    <!-- Controls for x-axis and y-axis selection -->
+    <div class="controls">
+        <label for="x-axis">Choose X-Axis:</label>
+        <select id="x-axis">
+            <option value="end_year">End Year</option>
+            <option value="sector">Sector</option>
+            <option value="topic">Topic</option>
+            <option value="region">Region</option>
+            <option value="start_year">Start Year</option>
+            <option value="impact">Impact</option>
+            <option value="added">Added</option>
+            <option value="published">Published</option>
+            <option value="country">Country</option>
+            <option value="pestle">Pestle</option>
+            <option value="source">Source</option>
+            <option value="title">Title</option>
+        </select>
+
+        <label for="y-axis">Choose Y-Axis:</label>
+        <select id="y-axis">
+            <option value="likelihood">Likelihood</option>
+            <option value="relevance">Relevance</option>
+            <option value="intensity">Intensity</option>
+        </select>
+    </div>
+
+    <svg width="1200" height="700"></svg>
+    <div class="tooltip" id="tooltip"></div> <!-- Tooltip element -->
+
+    <script>
+        let data = {{ data|safe }};
+
+        const margin = {top: 50, right: 70, bottom: 100, left: 100},
+              width = 1200 - margin.left - margin.right,
+              height = 700 - margin.top - margin.bottom;
+        
+        const svg = d3.select("svg")
+                      .attr("width", width + margin.left + margin.right)
+                      .attr("height", height + margin.top + margin.bottom)
+                      .append("g")
+                      .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        const tooltip = d3.select("#tooltip");
+
+        let xAttribute = "topic";
+        let yAttribute = "intensity";
+
+        const xSelect = document.getElementById("x-axis");
+        const ySelect = document.getElementById("y-axis");
+
+        xSelect.addEventListener("change", updateChart);
+        ySelect.addEventListener("change", updateChart);
+
+        function updateScales() {
+            xScale = d3.scaleBand()
+                       .domain(data.map(d => d[xAttribute]))
+                       .range([0, width])
+                       .padding(0.4);
+
+            yScale = d3.scaleLinear()
+                       .domain([0, d3.max(data, d => +d[yAttribute])])
+                       .nice()
+                       .range([height, 0]);
+        }
+
+        function renderAxes() {
+            svg.selectAll(".axis").remove();
+
+            svg.append("g")
+               .attr("class", "axis x-axis")
+               .attr("transform", `translate(0,${height})`)
+               .call(d3.axisBottom(xScale))
+               .selectAll("text")
+               .attr("transform", "rotate(-45)")
+               .attr("text-anchor", "end")
+               .attr("dy", ".35em")
+               .attr("dx", "-.8em")
+               .style("fill", "#333")
+               .style("font-size", "14px");
+
+            svg.append("g")
+               .attr("class", "axis y-axis")
+               .call(d3.axisLeft(yScale))
+               .selectAll("text")
+               .style("font-size", "14px");
+        }
+
+        function renderBars() {
+            svg.selectAll(".bar").remove();
+
+            svg.selectAll(".bar")
+               .data(data)
+               .enter()
+               .append("rect")
+               .attr("class", "bar")
+               .attr("x", d => xScale(d[xAttribute]))
+               .attr("y", d => yScale(d[yAttribute]))
+               .attr("width", xScale.bandwidth())
+               .attr("height", d => height - yScale(d[yAttribute]))
+               .on("mouseover", (event, d) => {
+                    tooltip.style("opacity", 1)
+                           .html(`${xAttribute}: ${d[xAttribute]}<br>${yAttribute}: ${d[yAttribute]}`);
+               })
+               .on("mousemove", (event) => {
+                    tooltip.style("left", (event.pageX + 10) + "px")
+                           .style("top", (event.pageY - 30) + "px");
+               })
+               .on("mouseout", () => {
+                    tooltip.style("opacity", 0);
+               });
+        }
+
+        function renderLabels() {
+            svg.selectAll(".axis-label").remove();
+
+            svg.append("text")
+               .attr("class", "axis-label")
+               .attr("x", width / 2)
+               .attr("y", height + margin.bottom - 30)
+               .style("text-anchor", "middle")
+               .style("font-size", "18px")
+               .text(xAttribute.charAt(0).toUpperCase() + xAttribute.slice(1));
+
+            svg.append("text")
+               .attr("class", "axis-label")
+               .attr("transform", "rotate(-90)")
+               .attr("x", -height / 2)
+               .attr("y", -margin.left + 40)
+               .style("text-anchor", "middle")
+               .style("font-size", "18px")
+               .text(yAttribute.charAt(0).toUpperCase() + yAttribute.slice(1));
+        }
+
+        function updateChart() {
+            xAttribute = xSelect.value;
+            yAttribute = ySelect.value;
+
+            updateScales();
+            renderAxes();
+            renderBars();
+            renderLabels();
+        }
+
+        let xScale, yScale;
+        updateChart();
+    </script>
+</body>
+</html>
