@@ -26,8 +26,19 @@ The `DataExtractor` API is designed to retrieve data from the `DataRecord` model
       from .views import DataExtractor
 
       urlpatterns = [
-          path('api/data/', DataExtractor.as_view(), name='data-extractor'),
-      ]
+          path('api/data/', DataExtractor.as_view(), name='data-extractor'),# api 
+          path('visualizer/', data_visualizer, name='data_visualizer'),# visualizer
+# Data Visualizer
+
+This project is an interactive data visualization tool using HTML, CSS, and D3.js. It allows users to dynamically choose different attributes for the X and Y axes to render a bar chart based on their selections. The tool features a hover-enabled tooltip to display detailed data values and smooth transitions for a visually engaging experience.
+
+### Key filtering features:
+
+- **X-Axis and Y-Axis Selection**: Users can filter the chart by selecting different attributes for both axes.
+- **Dynamic Chart Updates**: The chart automatically updates when new attributes are selected.
+- **Tooltip**: Hover over bars to view specific data values for the selected X and Y attributes.
+- **Smooth Transitions**: Visual elements like bars change dynamically with smooth transitions for a fluid user experience.
+
 # Usage
 ## Endpoint
     
