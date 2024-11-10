@@ -64,8 +64,8 @@ The request body should be a JSON object containing filter criteria. Each key-va
 **Request:**
 
     {
-      "intensity": {"gte": 5},
-      "added": {"lte": "2023-01-01"}
+      "intensity": 5,
+      "added": "2017-01-20T03:26:40Z"
     }
 **Explanation:** This request retrieves records where intensity is greater than or equal to 5 and added date is less than or equal to 2023-01-01.
 
