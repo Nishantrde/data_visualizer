@@ -64,10 +64,10 @@ The request body should be a JSON object containing filter criteria. Each key-va
 **Request:**
 
     {
-      "intensity": 5,
-      "added": "2017-01-20T03:26:40Z"
+      "intensity": 6,
+      "topic": "oil"
     }
-**Explanation:** This request retrieves records where intensity is greater than or equal to 5 and added date is less than or equal to 2023-01-01.
+**Explanation:** This request retrieves records where intensity equal to 6 and topic oil.
 
 ## Response
 
