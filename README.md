@@ -80,7 +80,7 @@ The request body should be a JSON object containing filter criteria. Each key-va
     }
 **Explanation:** This request retrieves records where intensity equal to 6 and topic oil.
 
-## Response
+## Response💬
 
 **Success (200 OK):**
 
