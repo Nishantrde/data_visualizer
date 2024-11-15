@@ -105,7 +105,7 @@ The request body should be a JSON object containing filter criteria. Each key-va
     {
       "error": "Field 'invalid_field' is not a valid field of DataRecord."
     }
-## Error (404 Not Found) - No Data Found:
+## Error (⁴⁰⁴Not Found) - No Data Found:
 
     {
       "error": "No data found matching the given criteria."
