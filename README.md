@@ -53,7 +53,7 @@ The request body should be a JSON object containing filter criteria. Each key-va
 
 3. Range filtering for numeric and date fields.
 
-# Example Requests
+# Example Requests🙏
 ## 1. Exact Match
 **Request:**
     
