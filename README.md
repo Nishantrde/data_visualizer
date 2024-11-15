@@ -2,7 +2,7 @@
 
 The `DataExtractor` API is designed to retrieve data from the `DataRecord` model based on dynamic filter criteria provided in the request. This API supports exact matches, partial string matches, and range filtering for numerical and date fields.
 
-## Setup
+## Setup🛠
 
 1. **Install Django and Django REST Framework**:
    ```bash
