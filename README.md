@@ -130,7 +130,7 @@ The **DataExtractor** API uses Django’s **Q** objects to build complex queries
 
 3. Range Filtering: If a dictionary with **gte** or **lte** keys is provided, the API applies a range filter on numeric or date fields.
 
-# Error Handling
+# Error Handling❗⚠️
 Invalid Fields: If a field does not exist in **DataRecord**, the API returns a 400 Bad Request with an error message.
 
 No Matching Data: If no records match the criteria, the API returns a 404 Not Found response with an appropriate message.
