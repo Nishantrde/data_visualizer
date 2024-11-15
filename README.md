@@ -32,7 +32,7 @@ The `DataExtractor` API is designed to retrieve data from the `DataRecord` model
 
 This project is an interactive data visualization tool using HTML, CSS, and D3.js. It allows users to dynamically choose different attributes for the X and Y axes to render a bar chart based on their selections. The tool features a hover-enabled tooltip to display detailed data values and smooth transitions for a visually engaging experience.
 
-### Key filtering features:
+### Key filtering features🔍:
 
 - **X-Axis and Y-Axis Selection**: Users can filter the chart by selecting different attributes for both axes.
 - **Dynamic Chart Updates**: The chart automatically updates when new attributes are selected.
