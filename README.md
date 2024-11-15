@@ -8,7 +8,7 @@ The `DataExtractor` API is designed to retrieve data from the `DataRecord` model
    ```bash
    pip install django djangorestframework
 
-2. **Add REST Framework to Installed Apps: In your Django project’s settings, add 'rest_framework' to INSTALLED_APPS.**
+2. **Add REST Framework to Installed Apps: In your Django project’s settings, add 'rest_framework' to INSTALLED_AFPPS.**
 3. **Define DataRecord Model: Make sure that the DataRecord model is defined in your models file with relevant fields (e.g., likelihood, intensity, topic, added, published, etc.).**
 4. **Define Serializer: Create a serializer for DataRecord in serializers.py:**
     ```bash
@@ -71,7 +71,7 @@ The request body should be a JSON object containing filter criteria. Each key-va
     }
 **Explanation:** This request retrieves records where the source field contains the substring "EIA".
 
-## 3. Range Filtering
+## 3. Range Filtering🎯
 **Request:**
 
     {
